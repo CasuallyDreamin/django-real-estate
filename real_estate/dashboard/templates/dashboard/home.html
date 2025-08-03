@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome to the Real Estate Admin</h1>
+<p>This is your dashboard. Use the navigation to manage houses.</p>
+<a href="{% url 'houses:list' %}">Go to House Listings</a>
+{% endblock %}

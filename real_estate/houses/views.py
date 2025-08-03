@@ -2,20 +2,17 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 # Create your views here.
-def houses(request):
-    return HttpResponse("Hello World!")
-
 def house_list(request):
-    return HttpResponse("House List")
+    return render(request, "houses/list.html")
 
 def house_create(request):
-    return HttpResponse("Create house")
+    return render(request, "houses/create.html")
 
 def house_detail(request):
-    return HttpResponse("House details")
+    return render(request, "houses/detail.html")
 
 def house_update(request):
-    return HttpResponse("House Update")
+    return render(request, "houses/update.html")
 
 def house_delete(request):
-    return HttpResponse("House Delete")
+    return render(request, "houses/delete.html")

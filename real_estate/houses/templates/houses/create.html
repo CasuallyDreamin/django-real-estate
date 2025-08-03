@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Add New House{% endblock %}
+{% block content %}
+<h1>Add New House</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+
+<a href="{% url 'houses:list' %}" class="button mt-2">← Back to List</a>
+{% endblock %}

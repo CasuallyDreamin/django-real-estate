@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}House Detail{% endblock %}
+{% block content %}
+<h1>{{ house.title }}</h1>
+
+<p><strong>Address:</strong> {{ house.address }}</p>
+<p><strong>Price:</strong> ${{ house.price }}</p>
+<p><strong>Status:</strong> {{ house.status }}</p>
+<p><strong>Description:</strong> {{ house.description }}</p>
+
+<div class="mt-2">
+    <a href="{% url 'houses:edit' house.id %}" class="button">Edit</a>
+    <a href="{% url 'houses:delete' house.id %}" class="button">Delete</a>
+    <a href="{% url 'houses:list' %}" class="button">Back</a>
+</div>
+{% endblock %}

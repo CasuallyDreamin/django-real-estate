@@ -9,7 +9,7 @@
 <p><strong>Description:</strong> {{ house.description }}</p>
 
 <div class="mt-2">
-    <a href="{% url 'houses:edit' house.id %}" class="button">Edit</a>
+    <a href="{% url 'houses:update' house.id %}" class="button">Edit</a>
     <a href="{% url 'houses:delete' house.id %}" class="button">Delete</a>
     <a href="{% url 'houses:list' %}" class="button">Back</a>
 </div>

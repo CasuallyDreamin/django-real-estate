@@ -1,39 +1,31 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .models import House
 from .forms import HouseForm
 
-def house_list(request):
-    houses = House.objects.all()
-    return render(request, "houses/list.html", {'houses': houses})
+class HouseListView(ListView):
+    model = House
+    template_name = "houses/list.html"
+    context_object_name = "houses"
 
-def house_create(request):
-    if request.method == 'POST':
-        form = HouseForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('houses:list')
-    else:
-        form = HouseForm()
-    return render(request, "houses/create.html", {'form': form})
+class HouseDetailView(DetailView):
+    model = House
+    template_name = "houses/detail.html"
+    context_object_name = "house"
 
-def house_detail(request, pk):
-    house = get_object_or_404(House, pk=pk)
-    return render(request, "houses/detail.html", {'house': house})
+class HouseCreateView(CreateView):
+    model = House
+    form_class = HouseForm
+    template_name = "houses/create.html"
+    success_url = reverse_lazy('houses:list')
 
-def house_update(request, pk):
-    house = get_object_or_404(House, pk=pk)
-    if request.method == 'POST':
-        form = HouseForm(request.POST, instance=house)
-        if form.is_valid():
-            form.save()
-            return redirect('houses:detail', pk=pk)
-    else:
-        form = HouseForm(instance=house)
-    return render(request, "houses/update.html", {'form': form})
+class HouseUpdateView(UpdateView):
+    model = House
+    form_class = HouseForm
+    template_name = "houses/update.html"
+    success_url = reverse_lazy('houses:list')
 
-def house_delete(request, pk):
-    house = get_object_or_404(House, pk=pk)
-    if request.method == 'POST':
-        house.delete()
-        return redirect('houses:list')
-    return render(request, "houses/delete.html", {'house': house})
+class HouseDeleteView(DeleteView):
+    model = House
+    template_name = "houses/delete.html"
+    success_url = reverse_lazy('houses:list')

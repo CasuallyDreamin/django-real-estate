@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block title %}House List{% endblock %}
 {% block content %}
 <h1>All Houses</h1>
 
-<a href="{% url 'houses:add' %}" class="button">+ Add New House</a>
+<a href="{% url 'houses:create' %}" class="button">+ Add New House</a>
 
 <table>
     <thead>
@@ -22,15 +23,12 @@
             <td>{{ house.id }}</td>
             <td>{{ house.title }}</td>
             <td>{{ house.address }}</td>
-            <td>${{ house.price }}</td>
+            <td>{{ house.price|intcomma }}</td>
             <td>{{ house.status }}</td>
             <td>
-            <td>
                 <a href="{% url 'houses:detail' house.id %}" class="button">View</a>
-                <a href="{% url 'houses:edit' house.id %}" class="button">Edit</a>
+                <a href="{% url 'houses:update' house.id %}" class="button">Edit</a>
                 <a href="{% url 'houses:delete' house.id %}" class="button" style="background-color: #e74c3c;">Delete</a>
-            </td>
-
             </td>
         </tr>
         {% empty %}

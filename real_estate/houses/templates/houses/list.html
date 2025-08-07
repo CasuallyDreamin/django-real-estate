@@ -1,39 +1,32 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'houses/style.css' %}">
+{% endblock %}
 {% block title %}House List{% endblock %}
 {% block content %}
-<h1>All Houses</h1>
 
+<h1>All Houses</h1>
 <a href="{% url 'houses:create' %}" class="button">+ Add New House</a>
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Location</th>
-            <th>Price</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for house in houses %}
-        <tr>
-            <td>{{ house.id }}</td>
-            <td>{{ house.title }}</td>
-            <td>{{ house.address }}</td>
-            <td>{{ house.price|intcomma }}</td>
-            <td>{{ house.status }}</td>
-            <td>
-                <a href="{% url 'houses:detail' house.id %}" class="button">View</a>
-                <a href="{% url 'houses:update' house.id %}" class="button">Edit</a>
-                <a href="{% url 'houses:delete' house.id %}" class="button" style="background-color: #e74c3c;">Delete</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr><td colspan="6" class="text-center">No houses yet.</td></tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="card-grid">
+    {% for house in houses %}
+    <div class="card">
+        <div>
+            <h2 class="card-title">{{ house.title }}</h2>
+            <p><strong>Location:</strong> {{ house.address }}</p>
+            <p><strong>Price:</strong> ${{ house.price|intcomma }}</p>
+            <p><strong>Status:</strong> {{ house.status }}</p>
+        </div>
+        <div class="card-actions">
+            <a href="{% url 'houses:detail' house.id %}" class="button">View</a>
+            <a href="{% url 'houses:update' house.id %}" class="button">Edit</a>
+            <a href="{% url 'houses:delete' house.id %}" class="button delete-button">Delete</a>
+        </div>
+    </div>
+    {% empty %}
+    <p class="text-center">No houses yet.</p>
+    {% endfor %}
+</div>
 {% endblock %}

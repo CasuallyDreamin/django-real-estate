@@ -2,8 +2,9 @@
 from django.urls import path
 from .views import (
     HouseListView, HouseDetailView, HouseCreateView,
-    HouseUpdateView, HouseDeleteView
+    HouseUpdateView, HouseDeleteView, 
 )
+
 
 app_name = 'houses'
 

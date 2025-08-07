@@ -7,10 +7,26 @@
     <title>{% block title %}Real Estate System{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+{% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 <body>
     <nav>
         <a href="{% url 'dashboard:home' %}">Dashboard</a> |
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" style="background:none;border:none;padding:0;color:#007bff;cursor:pointer;">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
         <a href="{% url 'houses:list' %}">Houses</a>
+
     </nav>
 
     <main>

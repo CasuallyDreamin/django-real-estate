@@ -21,6 +21,7 @@ class HouseCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('houses:list')
     
     def form_valid(self, form):
+        print("form is valid.")
         form.instance.agent = self.request.user
         return super().form_valid(form)
 

@@ -9,6 +9,9 @@ class HouseListView(LoginRequiredMixin, ListView):
     template_name = "houses/list.html"
     context_object_name = "houses"
 
+    def get_queryset(self):
+        return House.objects.filter(agent=self.request.user)
+
 class HouseDetailView(LoginRequiredMixin, DetailView):
     model = House
     template_name = "houses/detail.html"

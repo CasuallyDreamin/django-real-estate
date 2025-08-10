@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>{% block title %}Real Estate System{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_header %}{% endblock %}
     {% block extra_css %}{% endblock %}
 </head>
 {% if messages %}

@@ -1,16 +1,80 @@
 {% extends 'base.html' %}
-{% block title %}House Detail{% endblock %}
+{% load static %}
+{% block title %}{{ house.title }}{% endblock %}
+{% load humanize %}
+{% load leaflet_tags %}
+
+{% block extra_header %}
+{% leaflet_css %}
+{% leaflet_js %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'houses/detail.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>{{ house.title }}</h1>
 
-<p><strong>Address:</strong> {{ house.address }}</p>
-<p><strong>Price:</strong> ${{ house.price }}</p>
-<p><strong>Status:</strong> {{ house.status }}</p>
-<p><strong>Description:</strong> {{ house.description }}</p>
+<article class="house-detail-container">
+    <h1>{{ house.title }}</h1>
 
-<div class="mt-2">
-    <a href="{% url 'houses:update' house.id %}" class="button">Edit</a>
-    <a href="{% url 'houses:delete' house.id %}" class="button">Delete</a>
-    <a href="{% url 'houses:list' %}" class="button">Back</a>
-</div>
+    <div class="house-detail-image">
+        {% if house.main_image %}
+            <img src="{{ house.main_image.url }}" alt="{{ house.title }}" class="house-main-image" style="max-width:100%; height:auto; border-radius:8px; margin-bottom:20px;">
+        {% else %}
+            <p><em>No image available</em></p>
+        {% endif %}
+    </div>
+    
+    <div class="house-detail-info">
+        <h2>Overview</h2>
+        <p><strong>Price:</strong> ${{ house.price|floatformat:2|intcomma }}</p>
+        <p><strong>Status:</strong> {{ house.get_status_display }}</p>
+        <p><strong>Property Type:</strong> {{ house.get_property_type_display }}</p>
+        <p><strong>Bedrooms:</strong> {{ house.bedrooms }}</p>
+        <p><strong>Bathrooms:</strong> {{ house.bathrooms }}</p>
+        <p><strong>Lot Size:</strong> {{ house.lot_size }} sqft</p>
+        {% if house.year_built %}
+            <p><strong>Year Built:</strong> {{ house.year_built }}</p>
+        {% endif %}
+        {% if house.floor_number and house.total_floors %}
+            <p><strong>Floor:</strong> {{ house.floor_number }} of {{ house.total_floors }}</p>
+        {% endif %}
+        <p><strong>Parking Spaces:</strong> {{ house.parking_spaces }}</p>
+    </div>
+
+    <div class="house-detail-description" style="margin-top:20px;">
+        <h2>Description</h2>
+        <p>{{ house.description|linebreaksbr }}</p>
+    </div>
+
+    <div class="house-location" style="margin-top:20px;">
+        <h2>Location</h2>
+        <p>{{ house.address }}</p>
+        {% if house.latitude and house.longitude %}
+            <div id="map" style="width:100%; height:300px; border-radius:8px; margin-top:10px;">
+                {% leaflet_map "map" callback="initMap" %}
+            </div>
+            <script>
+                function initMap(map) {
+                    var lat = {{ house.latitude }};
+                    var lng = {{ house.longitude }};
+                    var marker = L.marker([lat, lng]).addTo(map);
+                    map.setView([lat, lng], 15);
+                    marker.bindPopup("{{ house.title|escapejs }}").openPopup();
+                    
+                    setTimeout(function() {
+                        map.invalidateSize();
+                    }, 100);
+                }
+            </script>
+        {% endif %}
+    </section>
+
+    <div class="house-detail-actions" style="margin-top:30px;">
+        <a href="{% url 'houses:update' house.id %}" class="button">Edit</a>
+        <a href="{% url 'houses:delete' house.id %}" class="button" onclick="return confirm('Are you sure you want to delete this house?');">Delete</a>
+        <a href="{% url 'houses:list' %}" class="button">Back to list</a>
+    </div>
+</article>
 {% endblock %}

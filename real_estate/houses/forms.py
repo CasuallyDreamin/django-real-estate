@@ -8,9 +8,9 @@ class HouseForm(forms.ModelForm):
             'title', 'description', 'property_type', 'status',
             'address',
             'latitude', 'longitude',
-            'bedrooms', 'bathrooms', 'square_feet', 'lot_size',
+            'bedrooms', 'bathrooms', 'lot_size',
             'year_built', 'floor_number', 'total_floors', 'parking_spaces',
-            'price', 'currency', 'hoa_fee', 'property_tax',
-            'main_image', 'agent'
+            'price',
+            'main_image'
         ]
 

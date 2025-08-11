@@ -19,15 +19,15 @@
 <body>
     <nav>
         <a href="{% url 'dashboard:dashboard' %}">Dashboard</a> |
+        <a href="{% url 'houses:list' %}">Houses</a>
         {% if user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+            <form class= "account_action" action="{% url 'logout' %}" method="post" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" style="background:none;border:none;padding:0;color:#007bff;cursor:pointer;">Logout</button>
+                <button type="submit">Logout</button>
             </form>
         {% else %}
-            <a href="{% url 'login' %}">Login</a>
+            <a class="account_action" href="{% url 'login' %}">Login</a>
         {% endif %}
-        <a href="{% url 'houses:list' %}">Houses</a>
 
     </nav>
     <main>

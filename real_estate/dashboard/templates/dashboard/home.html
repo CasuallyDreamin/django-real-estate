@@ -1,7 +1,52 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Real Estate Admin</h1>
-<p>This is your dashboard. Use the navigation to manage houses.</p>
-<a href="{% url 'houses:list' %}">Go to House Listings</a>
+<div class="dashboard-container">
+
+    <h1>Admin Dashboard</h1>
+
+    <div class="stats-panel">
+        <div class="stat-card">
+            <h2>{{ total_houses }}</h2>
+            <p>Total Houses</p>
+        </div>
+        <div class="stat-card">
+            <h2>{{ available }}</h2>
+            <p>Available</p>
+        </div>
+        <div class="stat-card">
+            <h2>{{ sold }}</h2>
+            <p>Sold</p>
+        </div>
+        <div class="stat-card">
+            <h2>{{ pending }}</h2>
+            <p>Pending</p>
+        </div>
+    </div>
+
+    <div class="actions-panel">
+        <a href="{% url 'houses:create' %}" class="button">+ Add New House</a>
+        <a href="{% url 'houses:list' %}" class="button">View Listings</a>
+        <!-- Add more shortcuts here -->
+    </div>
+
+    <div class="recent-activity">
+        <h3>Recently Added Houses</h3>
+        <ul>
+            {% for house in recent_houses %}
+                <li>
+                    <a href="{% url 'houses:detail' house.pk %}">{{ house.title }}</a> - {{ house.created_at|date:"M d, Y" }}
+                </li>
+            {% empty %}
+                <li>No recent houses added.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>
 {% endblock %}

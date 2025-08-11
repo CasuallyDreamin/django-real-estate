@@ -1,0 +1,110 @@
+/* Dashboard Container */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Page Title */
+.dashboard-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Stats Panel */
+.stats-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background-color: #1f1f1f;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.04);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 16px rgba(255, 255, 255, 0.06);
+}
+
+.stat-card h2 {
+    font-size: 2rem;
+    margin: 0;
+    color: #4aa8ff;
+}
+
+.stat-card p {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #82cfff;
+}
+
+/* Actions Panel */
+.actions-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.actions-panel .button {
+    background-color: #4aa8ff;
+    color: #121212;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.actions-panel .button:hover {
+    background-color: #82cfff;
+    transform: translateY(-2px);
+}
+
+/* Recent Activity */
+.recent-activity {
+    background-color: #1f1f1f;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.04);
+}
+
+.recent-activity h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+}
+
+.recent-activity ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recent-activity li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.recent-activity li:last-child {
+    border-bottom: none;
+}
+
+.recent-activity a {
+    color: #4aa8ff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.recent-activity a:hover {
+    color: #82cfff;
+}

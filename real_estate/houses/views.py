@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .models import House
 from .forms import HouseForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,8 +32,9 @@ class HouseUpdateView(LoginRequiredMixin, UpdateView):
     model = House
     form_class = HouseForm
     template_name = "houses/update.html"
-    success_url = reverse_lazy('houses:list')
 
+    def get_success_url(self):
+        return reverse('houses:detail', kwargs={'pk': self.object.pk})
 
     def form_valid(self, form):
         form.instance.agent = self.request.user

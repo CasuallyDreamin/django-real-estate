@@ -13,4 +13,7 @@ class HouseForm(forms.ModelForm):
             'price',
             'main_image'
         ]
-
+        widgets = {
+            'latitude': forms.HiddenInput(),
+            'longitude': forms.HiddenInput(),
+        }

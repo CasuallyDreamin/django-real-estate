@@ -109,3 +109,20 @@ input, select, textarea {
 .mt-4 {
     margin-top: 40px;
 }
+ul.errorlist, ul.errorlist li {
+    color: #b00020 !important;
+    background-color: #fdd !important;
+    padding: 8px 12px !important;
+    border-radius: 4px !important;
+    margin-bottom: 10px !important;
+    list-style-type: none !important;
+    margin-left: 0 !important;
+}
+
+.form-error {
+    border: 1px solid #e00;
+    background: #fee;
+    padding: 10px;
+    border-radius: 4px;
+}
+

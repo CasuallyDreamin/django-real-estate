@@ -1,13 +1,109 @@
 {% extends 'base.html' %}
+
+{% load leaflet_tags %}
+
+{% block extra_header %}
+{% leaflet_css %}
+{% leaflet_js %}
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+/>
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+{% endblock %}
+
 {% block title %}Add New House{% endblock %}
 {% block content %}
 <h1>Add New House</h1>
 
-<form method="post" enctype="multipart/form-data">
+    {% if form.non_field_errors %}
+    <div class="form-error general-error" style="color: red; margin-bottom: 1em;">
+        <ul>
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if form.errors %}
+        <div class="form-error all-errors" style="color: red; margin-bottom: 1em;">
+            <p>Please fix the errors below.</p>
+        </div>
+    {% endif %}
+    
+<form method="post" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
     {{ form.as_p }}
+    <div id="map" style="height: 400px; border-radius: 8px; margin-bottom: 1rem;">
+        {% leaflet_map "select_location_map" callback="initSelectMap" %}
+    </div>
+
     <button type="submit">Save</button>
 </form>
 
 <a href="{% url 'houses:list' %}" class="button mt-2">← Back to List</a>
+
+<script>function initSelectMap(map, options) {
+    let latField = document.getElementById('id_latitude');
+    let lonField = document.getElementById('id_longitude');
+    let marker;
+
+    // Center map on existing coordinates or default location
+    if (latField.value && lonField.value) {
+        const lat = parseFloat(latField.value);
+        const lon = parseFloat(lonField.value);
+        marker = L.marker([lat, lon]).addTo(map);
+        map.setView([lat, lon], 13);
+    } else {
+        map.setView([51.505, -0.09], 13);
+    }
+
+    // Add click-to-place-marker
+    map.on('click', function(e) {
+        const { lat, lng } = e.latlng;
+        latField.value = lat.toFixed(6);
+        lonField.value = lng.toFixed(6);
+
+        if (marker) {
+            marker.setLatLng([lat, lng]);
+        } else {
+            marker = L.marker([lat, lng]).addTo(map);
+        }
+    });
+
+    // Add the geocoder control
+    L.Control.geocoder({
+        defaultMarkGeocode: false
+    })
+    .on('markgeocode', function(e) {
+        const latlng = e.geocode.center;
+        map.fitBounds(e.geocode.bbox);
+
+        latField.value = latlng.lat.toFixed(6);
+        lonField.value = latlng.lng.toFixed(6);
+
+        if (marker) {
+            marker.setLatLng(latlng);
+        } else {
+            marker = L.marker(latlng).addTo(map);
+        }
+    })
+    .addTo(map);
+
+    setTimeout(() => map.invalidateSize(), 100);
+}
+</script>
+<style>
+    .leaflet-control-geocoder-form input {
+    background-color: #333; /* dark background */
+    color: #fff;            /* white text */
+    border: 1px solid #666; /* optional: subtle border */
+}
+
+.leaflet-control-geocoder-form input::placeholder {
+    color: #bbb;            /* lighter placeholder */
+}
+
+</style>
 {% endblock %}

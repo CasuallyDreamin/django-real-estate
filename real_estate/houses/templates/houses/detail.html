@@ -14,10 +14,8 @@
 {% endblock %}
 
 {% block content %}
-
+<h1>{{ house.title }}</h1>
 <article class="house-detail-container">
-    <h1>{{ house.title }}</h1>
-
     <div class="house-detail-image">
         {% if house.main_image %}
             <img src="{{ house.main_image.url }}" alt="{{ house.title }}" class="house-main-image" style="max-width:100%; height:auto; border-radius:8px; margin-bottom:20px;">
@@ -73,7 +71,7 @@
 
     <div class="house-detail-actions" style="margin-top:30px;">
         <a href="{% url 'houses:update' house.id %}" class="button">Edit</a>
-        <a href="{% url 'houses:delete' house.id %}" class="button" onclick="return confirm('Are you sure you want to delete this house?');">Delete</a>
+        <a href="{% url 'houses:delete' house.id %}" class="button">Delete</a>
         <a href="{% url 'houses:list' %}" class="button">Back to list</a>
     </div>
 </article>

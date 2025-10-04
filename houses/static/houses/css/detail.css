@@ -118,3 +118,97 @@
     margin-bottom: 24px;
   }
 }
+
+/* ===========================
+   Responsive Overrides - House Detail
+   =========================== */
+
+/* Tablet (<=1024px) */
+@media (max-width: 1024px) {
+    .house-detail-container {
+        padding: 24px;
+        gap: 24px;
+    }
+
+    .house-detail-info h1 {
+        font-size: 2rem;
+    }
+
+    .house-detail-meta {
+        gap: 10px 16px;
+        font-size: 1rem;
+    }
+
+    .house-detail-description {
+        font-size: 1rem;
+        padding: 16px;
+    }
+
+    .house-detail-actions a {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+    }
+}
+
+/* Mobile Landscape (<=768px) */
+@media (max-width: 768px) {
+    .house-detail-container {
+        flex-direction: column;
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .house-detail-image {
+        max-height: 250px;
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .house-detail-info h1 {
+        font-size: 1.75rem;
+    }
+
+    .house-detail-meta {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 8px 12px;
+    }
+
+    .house-detail-description {
+        font-size: 0.95rem;
+        padding: 14px;
+    }
+
+    .house-detail-actions a {
+        width: 100%;
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Mobile Portrait (<=480px) */
+@media (max-width: 480px) {
+    .house-detail-container {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .house-detail-info h1 {
+        font-size: 1.5rem;
+    }
+
+    .house-detail-meta {
+        grid-template-columns: 1fr;
+        gap: 6px 0;
+        font-size: 0.9rem;
+    }
+
+    .house-detail-description {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .house-detail-actions a {
+        font-size: 0.85rem;
+        padding: 10px;
+    }
+}
